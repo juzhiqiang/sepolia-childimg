@@ -6,7 +6,7 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --studio sepolia-childimg",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ sepolia-childimg",
     "create-local": "graph create --node http://localhost:8020/ sepolia-childimg",
     "remove-local": "graph remove --node http://localhost:8020/ sepolia-childimg",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 sepolia-childimg"
