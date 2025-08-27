@@ -15,7 +15,7 @@ export function handleBatchDataStored(event: BatchDataStoredEvent): void {
   )
   entity.logIds = event.params.logIds
   entity.creator = event.params.creator
-  entity.dataType = event.params.dataType
+  entity.dataType = event.params.dataType.toString()
   entity.timestamp = event.params.timestamp
 
   entity.blockNumber = event.block.number
@@ -31,7 +31,7 @@ export function handleDataStored(event: DataStoredEvent): void {
   )
   entity.logId = event.params.logId
   entity.creator = event.params.creator
-  entity.dataType = event.params.dataType
+  entity.dataType = event.params.dataType.toString()
   entity.content = event.params.content
   entity.timestamp = event.params.timestamp
   entity.dataHash = event.params.dataHash
