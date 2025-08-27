@@ -1,4 +1,4 @@
-import { Bytes, BigInt, log } from "@graphprotocol/graph-ts";
+import { Bytes, BigInt, log, ethereum } from "@graphprotocol/graph-ts";
 import {
   BatchDataStored as BatchDataStoredEvent,
   DataStored as DataStoredEvent,
@@ -16,8 +16,8 @@ function calculateTransactionFee(gasUsed: BigInt, gasPrice: BigInt): BigInt {
   return gasUsed.times(gasPrice);
 }
 
-// 通用的交易信息填充函数
-function populateTransactionInfo(entity: any, event: any, messageType: string): void {
+// 为 BatchDataStored 填充交易信息
+function populateBatchDataStoredTransactionInfo(entity: BatchDataStored, event: BatchDataStoredEvent, messageType: string): void {
   // 1. 消息类型
   entity.messageType = messageType;
   
@@ -42,7 +42,133 @@ function populateTransactionInfo(entity: any, event: any, messageType: string): 
   // 8. inputdata
   entity.inputData = event.transaction.input;
   
-  // 11. 交易时间 (使用区块时间戳)
+  // 10. 交易时间 (使用区块时间戳)
+  entity.transactionTime = event.block.timestamp;
+  
+  // 12. Gas Price
+  entity.gasPrice = event.transaction.gasPrice;
+  
+  // Gas Used (从receipt获取，如果可用)
+  entity.gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  
+  // Gas Limit
+  entity.gasLimit = event.transaction.gasLimit;
+  
+  // 11. Transaction Fee
+  entity.transactionFee = calculateTransactionFee(entity.gasUsed, entity.gasPrice);
+}
+
+// 为 DataStored 填充交易信息
+function populateDataStoredTransactionInfo(entity: DataStored, event: DataStoredEvent, messageType: string): void {
+  // 1. 消息类型
+  entity.messageType = messageType;
+  
+  // 2. value 交易金额
+  entity.value = event.transaction.value;
+  
+  // 3. 接收地址
+  entity.toAddress = event.transaction.to ? event.transaction.to! : event.address;
+  
+  // 4. 发送地址
+  entity.fromAddress = event.transaction.from;
+  
+  // 5. 交易哈希
+  entity.transactionHash = event.transaction.hash;
+  
+  // 6. 区块号
+  entity.blockNumber = event.block.number;
+  
+  // 7. 合约地址
+  entity.contractAddress = event.address;
+  
+  // 8. inputdata
+  entity.inputData = event.transaction.input;
+  
+  // 10. 交易时间 (使用区块时间戳)
+  entity.transactionTime = event.block.timestamp;
+  
+  // 12. Gas Price
+  entity.gasPrice = event.transaction.gasPrice;
+  
+  // Gas Used (从receipt获取，如果可用)
+  entity.gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  
+  // Gas Limit
+  entity.gasLimit = event.transaction.gasLimit;
+  
+  // 11. Transaction Fee
+  entity.transactionFee = calculateTransactionFee(entity.gasUsed, entity.gasPrice);
+}
+
+// 为 OwnershipTransferred 填充交易信息
+function populateOwnershipTransferredTransactionInfo(entity: OwnershipTransferred, event: OwnershipTransferredEvent, messageType: string): void {
+  // 1. 消息类型
+  entity.messageType = messageType;
+  
+  // 2. value 交易金额
+  entity.value = event.transaction.value;
+  
+  // 3. 接收地址
+  entity.toAddress = event.transaction.to ? event.transaction.to! : event.address;
+  
+  // 4. 发送地址
+  entity.fromAddress = event.transaction.from;
+  
+  // 5. 交易哈希
+  entity.transactionHash = event.transaction.hash;
+  
+  // 6. 区块号
+  entity.blockNumber = event.block.number;
+  
+  // 7. 合约地址
+  entity.contractAddress = event.address;
+  
+  // 8. inputdata
+  entity.inputData = event.transaction.input;
+  
+  // 10. 交易时间 (使用区块时间戳)
+  entity.transactionTime = event.block.timestamp;
+  
+  // 12. Gas Price
+  entity.gasPrice = event.transaction.gasPrice;
+  
+  // Gas Used (从receipt获取，如果可用)
+  entity.gasUsed = event.receipt ? event.receipt!.gasUsed : BigInt.fromI32(0);
+  
+  // Gas Limit
+  entity.gasLimit = event.transaction.gasLimit;
+  
+  // 11. Transaction Fee
+  entity.transactionFee = calculateTransactionFee(entity.gasUsed, entity.gasPrice);
+}
+
+// 为 Transaction 填充信息
+function populateTransactionInfo(entity: Transaction, event: ethereum.Event, messageType: string): void {
+  // 1. 消息类型
+  entity.messageType = messageType;
+  
+  // 2. value 交易金额
+  entity.value = event.transaction.value;
+  
+  // 3. 接收地址
+  entity.toAddress = event.transaction.to ? event.transaction.to! : event.address;
+  
+  // 4. 发送地址
+  entity.fromAddress = event.transaction.from;
+  
+  // 5. 交易哈希
+  entity.transactionHash = event.transaction.hash;
+  
+  // 6. 区块号
+  entity.blockNumber = event.block.number;
+  
+  // 7. 合约地址
+  entity.contractAddress = event.address;
+  
+  // 8. inputdata
+  entity.inputData = event.transaction.input;
+  
+  // 10. 交易时间 (使用区块时间戳)
   entity.transactionTime = event.block.timestamp;
   
   // 12. Gas Price
@@ -74,7 +200,7 @@ export function handleBatchDataStored(event: BatchDataStoredEvent): void {
   entity.transactionHash = event.transaction.hash;
 
   // 填充扩展的交易信息
-  populateTransactionInfo(entity, event, "BatchDataStored");
+  populateBatchDataStoredTransactionInfo(entity, event, "BatchDataStored");
   
   // 9. 链上数据内容字段 (对于批量数据，可能没有具体内容)
   entity.onChainContent = "Batch data with " + entity.logIds.length.toString() + " items";
@@ -108,7 +234,7 @@ export function handleDataStored(event: DataStoredEvent): void {
   entity.transactionHash = event.transaction.hash;
 
   // 填充扩展的交易信息
-  populateTransactionInfo(entity, event, "DataStored");
+  populateDataStoredTransactionInfo(entity, event, "DataStored");
   
   // 9. 链上数据内容字段
   entity.onChainContent = event.params.content;
@@ -137,7 +263,7 @@ export function handleOwnershipTransferred(
   entity.transactionHash = event.transaction.hash;
 
   // 填充扩展的交易信息
-  populateTransactionInfo(entity, event, "OwnershipTransferred");
+  populateOwnershipTransferredTransactionInfo(entity, event, "OwnershipTransferred");
   
   // 9. 链上数据内容字段
   entity.onChainContent = "Ownership transferred from " + 
