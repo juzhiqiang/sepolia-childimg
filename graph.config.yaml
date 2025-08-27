@@ -1,0 +1,16 @@
+# Graph Protocol configuration
+# This file defines the generated code structure
+
+output: ./generated
+contracts:
+  ChildImg:
+    abi: ./abis/ChildImg.json
+    address: "0x3ae524c8ec173e7081007e1c87193cdf53b78042"
+    network: sepolia
+
+schema: ./schema.graphql
+source: ./src
+
+# Generated files will be placed in:
+# ./generated/ChildImg/ChildImg.ts
+# ./generated/schema.ts
