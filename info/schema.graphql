@@ -1,0 +1,32 @@
+type BatchDataStored @entity(immutable: true) {
+  id: Bytes!
+  logIds: [BigInt!]! # uint256[]
+  creator: Bytes! # address
+  dataType: String! # string
+  timestamp: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type DataStored @entity(immutable: true) {
+  id: Bytes!
+  logId: BigInt! # uint256
+  creator: Bytes! # address
+  dataType: String! # string
+  content: String! # string
+  timestamp: BigInt! # uint256
+  dataHash: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type OwnershipTransferred @entity(immutable: true) {
+  id: Bytes!
+  previousOwner: Bytes! # address
+  newOwner: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

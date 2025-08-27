@@ -1,0 +1,304 @@
+[
+  {
+    "name": "BatchDataStored",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "logIds",
+        "type": "uint256[]",
+        "indexed": false,
+        "internalType": "uint256[]"
+      },
+      {
+        "name": "creator",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "dataType",
+        "type": "string",
+        "indexed": true,
+        "internalType": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "DataStored",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "logId",
+        "type": "uint256",
+        "indexed": true,
+        "internalType": "uint256"
+      },
+      {
+        "name": "creator",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "dataType",
+        "type": "string",
+        "indexed": true,
+        "internalType": "string"
+      },
+      {
+        "name": "content",
+        "type": "string",
+        "indexed": false,
+        "internalType": "string"
+      },
+      {
+        "name": "timestamp",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "dataHash",
+        "type": "bytes32",
+        "indexed": false,
+        "internalType": "bytes32"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "OwnershipTransferred",
+    "type": "event",
+    "inputs": [
+      {
+        "name": "previousOwner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      },
+      {
+        "name": "newOwner",
+        "type": "address",
+        "indexed": true,
+        "internalType": "address"
+      }
+    ],
+    "anonymous": false
+  },
+  {
+    "name": "getLogData",
+    "type": "function",
+    "inputs": [
+      { "name": "logId", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple",
+        "components": [
+          { "name": "logId", "type": "uint256", "internalType": "uint256" },
+          { "name": "creator", "type": "address", "internalType": "address" },
+          { "name": "dataType", "type": "string", "internalType": "string" },
+          { "name": "content", "type": "string", "internalType": "string" },
+          { "name": "timestamp", "type": "uint256", "internalType": "uint256" },
+          { "name": "dataHash", "type": "bytes32", "internalType": "bytes32" }
+        ],
+        "internalType": "struct DataLogContract.DataLog"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getLogIdsByType",
+    "type": "function",
+    "inputs": [
+      { "name": "dataType", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [
+      { "name": "", "type": "uint256[]", "internalType": "uint256[]" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getLogsPaginated",
+    "type": "function",
+    "inputs": [
+      { "name": "offset", "type": "uint256", "internalType": "uint256" },
+      { "name": "limit", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [
+      {
+        "name": "",
+        "type": "tuple[]",
+        "components": [
+          { "name": "logId", "type": "uint256", "internalType": "uint256" },
+          { "name": "creator", "type": "address", "internalType": "address" },
+          { "name": "dataType", "type": "string", "internalType": "string" },
+          { "name": "content", "type": "string", "internalType": "string" },
+          { "name": "timestamp", "type": "uint256", "internalType": "uint256" },
+          { "name": "dataHash", "type": "bytes32", "internalType": "bytes32" }
+        ],
+        "internalType": "struct DataLogContract.DataLog[]"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getStats",
+    "type": "function",
+    "inputs": [],
+    "outputs": [
+      { "name": "totalLogs", "type": "uint256", "internalType": "uint256" },
+      { "name": "totalUsers", "type": "uint256", "internalType": "uint256" },
+      {
+        "name": "contractAddress",
+        "type": "address",
+        "internalType": "address"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "getUserLogIds",
+    "type": "function",
+    "inputs": [
+      { "name": "user", "type": "address", "internalType": "address" }
+    ],
+    "outputs": [
+      { "name": "", "type": "uint256[]", "internalType": "uint256[]" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "logs",
+    "type": "function",
+    "inputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "outputs": [
+      { "name": "logId", "type": "uint256", "internalType": "uint256" },
+      { "name": "creator", "type": "address", "internalType": "address" },
+      { "name": "dataType", "type": "string", "internalType": "string" },
+      { "name": "content", "type": "string", "internalType": "string" },
+      { "name": "timestamp", "type": "uint256", "internalType": "uint256" },
+      { "name": "dataHash", "type": "bytes32", "internalType": "bytes32" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "name": "nextLogId",
+    "type": "function",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "name": "owner",
+    "type": "function",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "address", "internalType": "address" }],
+    "stateMutability": "view"
+  },
+  {
+    "name": "renounceOwnership",
+    "type": "function",
+    "inputs": [],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "storeBatchData",
+    "type": "function",
+    "inputs": [
+      { "name": "dataType", "type": "string", "internalType": "string" },
+      { "name": "contents", "type": "string[]", "internalType": "string[]" }
+    ],
+    "outputs": [
+      { "name": "logIds", "type": "uint256[]", "internalType": "uint256[]" }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "storeData",
+    "type": "function",
+    "inputs": [
+      { "name": "dataType", "type": "string", "internalType": "string" },
+      { "name": "content", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [
+      { "name": "logId", "type": "uint256", "internalType": "uint256" }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "storeJSON",
+    "type": "function",
+    "inputs": [
+      { "name": "jsonData", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "storeLogData",
+    "type": "function",
+    "inputs": [
+      { "name": "logData", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "storeTransactionData",
+    "type": "function",
+    "inputs": [
+      { "name": "transactionData", "type": "string", "internalType": "string" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "transferOwnership",
+    "type": "function",
+    "inputs": [
+      { "name": "newOwner", "type": "address", "internalType": "address" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "name": "typeToLogs",
+    "type": "function",
+    "inputs": [
+      { "name": "", "type": "string", "internalType": "string" },
+      { "name": "", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "name": "userLogs",
+    "type": "function",
+    "inputs": [
+      { "name": "", "type": "address", "internalType": "address" },
+      { "name": "", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "name": "verifyDataIntegrity",
+    "type": "function",
+    "inputs": [
+      { "name": "logId", "type": "uint256", "internalType": "uint256" },
+      { "name": "expectedHash", "type": "bytes32", "internalType": "bytes32" }
+    ],
+    "outputs": [{ "name": "", "type": "bool", "internalType": "bool" }],
+    "stateMutability": "view"
+  }
+]
