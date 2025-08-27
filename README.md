@@ -66,100 +66,17 @@ yarn deploy
 The subgraph tracks the following entities:
 
 - **Transfer**: Records all token transfers
-- **Approval**: Records individual token approvals
+- **Approval**: Records individual token approvals  
 - **ApprovalForAll**: Records operator approvals
 - **Token**: Represents each NFT with metadata
 - **User**: Represents addresses that interact with the contract
 
-## Example Queries
+## Graph Init Command
 
-### Get all tokens owned by an address
-```graphql
-query GetUserTokens($owner: Bytes!) {
-  user(id: $owner) {
-    id
-    tokensOwned {
-      id
-      tokenId
-      tokenURI
-      createdAtTimestamp
-    }
-  }
-}
-```
-
-### Get recent transfers
-```graphql
-query GetRecentTransfers {
-  transfers(first: 10, orderBy: blockTimestamp, orderDirection: desc) {
-    id
-    from
-    to
-    tokenId
-    blockTimestamp
-    transactionHash
-  }
-}
-```
-
-### Get token details
-```graphql
-query GetToken($tokenId: String!) {
-  token(id: $tokenId) {
-    id
-    tokenId
-    owner
-    approved
-    tokenURI
-    createdAtTimestamp
-  }
-}
-```
-
-## Development
-
-### Local Development
-
-For local development with a local Graph node:
-
-1. Start a local Graph node (requires Docker)
-2. Create the subgraph locally:
+This subgraph was created using the equivalent of:
 ```bash
-npm run create-local
+graph init --protocol ethereum --network sepolia --contract-name ChildImg --from-contract 0x3ae524c8ec173e7081007e1c87193cdf53b78042 sepolia-childimg
 ```
-
-3. Deploy locally:
-```bash
-npm run deploy-local
-```
-
-### Testing
-
-The subgraph includes test templates. To run tests:
-
-```bash
-# Install matchstick-as for testing
-npm install --save-dev matchstick-as
-
-# Run tests
-graph test
-```
-
-## Configuration
-
-The main configuration is in `subgraph.yaml`:
-
-- **Network**: sepolia
-- **Start Block**: 0 (you may want to set this to the actual deployment block for better performance)
-- **Contract Address**: 0x3ae524c8ec173e7081007e1c87193cdf53b78042
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test your changes
-5. Submit a pull request
 
 ## License
 
