@@ -6,10 +6,14 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ sepolia-childimg",
+    "deploy": "graph deploy --studio sepolia-childimg",
     "create-local": "graph create --node http://localhost:8020/ sepolia-childimg",
     "remove-local": "graph remove --node http://localhost:8020/ sepolia-childimg",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 sepolia-childimg"
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 sepolia-childimg",
+    "test": "graph test",
+    "start": "docker-compose up",
+    "stop": "docker-compose down",
+    "clean": "docker-compose down -v --remove-orphans"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.56.0",
@@ -18,10 +22,23 @@
   "devDependencies": {
     "matchstick-as": "0.5.0"
   },
+  "keywords": [
+    "thegraph",
+    "subgraph",
+    "ethereum",
+    "sepolia",
+    "nft",
+    "erc721",
+    "childimg"
+  ],
   "author": "",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/juzhiqiang/sepolia-childimg.git"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/juzhiqiang/sepolia-childimg/issues"
+  },
+  "homepage": "https://github.com/juzhiqiang/sepolia-childimg#readme"
 }
