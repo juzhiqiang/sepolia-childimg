@@ -17,6 +17,8 @@ dataSources:
         - Transfer
         - Approval
         - ApprovalForAll
+        - Token
+        - User
       abis:
         - name: ChildImg
           file: ./abis/ChildImg.json
