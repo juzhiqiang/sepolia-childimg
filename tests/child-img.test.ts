@@ -14,9 +14,10 @@ import { createTransferEvent } from "./child-img-utils"
 // Tests structure (matchstick-as >=0.5.0)
 // https://thegraph.com/docs/en/developer/matchstick/#tests-structure-0-5-0
 
-describe("Describe entity assertions", () => {
+describe("ChildImg Contract Event Handling", () => {
   beforeAll(() => {
-    let from = Address.fromString("0x0000000000000000000000000000000000000001")
+    // Test mint scenario (from zero address)
+    let from = Address.fromString("0x0000000000000000000000000000000000000000")
     let to = Address.fromString("0x0000000000000000000000000000000000000001")
     let tokenId = BigInt.fromI32(234)
     let newTransferEvent = createTransferEvent(from, to, tokenId)
@@ -33,16 +34,17 @@ describe("Describe entity assertions", () => {
   test("Transfer created and stored", () => {
     assert.entityCount("Transfer", 1)
 
-    // 0xa16081f360e3847006db660bae1c6d1b2e17ec2a is the default address used in newMockEvent() function
+    // Check if the transfer entity has correct values
+    // Note: Entity ID format is transaction_hash + log_index
     assert.fieldEquals(
-      "Transfer",
+      "Transfer", 
       "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
       "from",
-      "0x0000000000000000000000000000000000000001"
+      "0x0000000000000000000000000000000000000000"
     )
     assert.fieldEquals(
       "Transfer",
-      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1",
+      "0xa16081f360e3847006db660bae1c6d1b2e17ec2a-1", 
       "to",
       "0x0000000000000000000000000000000000000001"
     )
@@ -52,8 +54,35 @@ describe("Describe entity assertions", () => {
       "tokenId",
       "234"
     )
+  })
 
-    // More assert options:
-    // https://thegraph.com/docs/en/developer/matchstick/#asserts
+  test("Token entity created on mint", () => {
+    // Check if Token entity was created
+    assert.entityCount("Token", 1)
+    
+    assert.fieldEquals(
+      "Token",
+      "234", // tokenId as string
+      "tokenId", 
+      "234"
+    )
+    assert.fieldEquals(
+      "Token",
+      "234",
+      "owner",
+      "0x0000000000000000000000000000000000000001"
+    )
+  })
+
+  test("User entity created", () => {
+    // Should create user entity for the 'to' address
+    assert.entityCount("User", 1)
+    
+    assert.fieldEquals(
+      "User",
+      "0x0000000000000000000000000000000000000001",
+      "id",
+      "0x0000000000000000000000000000000000000001"
+    )
   })
 })
