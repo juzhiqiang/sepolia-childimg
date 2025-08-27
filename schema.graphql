@@ -1,3 +1,35 @@
+type Transaction @entity(immutable: true) {
+  id: Bytes! # transaction hash
+  # 消息类型 (根据事件类型)
+  messageType: String!
+  # 交易金额 (value)
+  value: BigInt!
+  # 接收地址
+  toAddress: Bytes!
+  # 发送地址
+  fromAddress: Bytes!
+  # 交易哈希
+  transactionHash: Bytes!
+  # 区块号
+  blockNumber: BigInt!
+  # 合约地址
+  contractAddress: Bytes!
+  # inputdata
+  inputData: Bytes!
+  # 链上数据内容字段
+  onChainContent: String
+  # 交易时间
+  transactionTime: BigInt!
+  # Transaction Fee
+  transactionFee: BigInt!
+  # Gas Price
+  gasPrice: BigInt!
+  # Gas Used
+  gasUsed: BigInt!
+  # Gas Limit
+  gasLimit: BigInt!
+}
+
 type BatchDataStored @entity(immutable: true) {
   id: Bytes!
   logIds: [BigInt!]! # uint256[]
@@ -7,6 +39,20 @@ type BatchDataStored @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  
+  # 扩展字段
+  messageType: String!
+  value: BigInt!
+  toAddress: Bytes!
+  fromAddress: Bytes!
+  contractAddress: Bytes!
+  inputData: Bytes!
+  transactionTime: BigInt!
+  transactionFee: BigInt!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  gasLimit: BigInt!
+  onChainContent: String
 }
 
 type DataStored @entity(immutable: true) {
@@ -20,6 +66,20 @@ type DataStored @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  
+  # 扩展字段
+  messageType: String!
+  value: BigInt!
+  toAddress: Bytes!
+  fromAddress: Bytes!
+  contractAddress: Bytes!
+  inputData: Bytes!
+  transactionTime: BigInt!
+  transactionFee: BigInt!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  gasLimit: BigInt!
+  onChainContent: String!
 }
 
 type OwnershipTransferred @entity(immutable: true) {
@@ -29,4 +89,18 @@ type OwnershipTransferred @entity(immutable: true) {
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
+  
+  # 扩展字段
+  messageType: String!
+  value: BigInt!
+  toAddress: Bytes!
+  fromAddress: Bytes!
+  contractAddress: Bytes!
+  inputData: Bytes!
+  transactionTime: BigInt!
+  transactionFee: BigInt!
+  gasPrice: BigInt!
+  gasUsed: BigInt!
+  gasLimit: BigInt!
+  onChainContent: String
 }
