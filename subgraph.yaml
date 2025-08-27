@@ -19,14 +19,18 @@ dataSources:
         - BatchDataStored
         - DataStored
         - OwnershipTransferred
+        - Transaction
       abis:
         - name: DataLogContract
           file: ./abis/DataLogContract.json
       eventHandlers:
         - event: BatchDataStored(uint256[],indexed address,indexed string,uint256)
           handler: handleBatchDataStored
+          receipt: true
         - event: DataStored(indexed uint256,indexed address,indexed string,string,uint256,bytes32)
           handler: handleDataStored
+          receipt: true
         - event: OwnershipTransferred(indexed address,indexed address)
           handler: handleOwnershipTransferred
+          receipt: true
       file: ./src/data-log-contract.ts
